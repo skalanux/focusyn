@@ -5,7 +5,7 @@ from gi.repository import GdkPixbuf, Gtk
 from wiring import Graph, SingletonScope, inject
 from wiring.scanning import register
 
-from tomate.pomodoro import Bus, Config, Events, Session, Subscriber, on
+from focusyn.pomodoro import Bus, Config, Events, Session, Subscriber, on
 from .shortcut import ShortcutEngine
 from .systray import Systray
 from .widgets import Countdown, HeaderBar, SessionButton
@@ -13,17 +13,17 @@ from .widgets import Countdown, HeaderBar, SessionButton
 logger = logging.getLogger(__name__)
 
 
-@register.factory("tomate.ui.view", scope=SingletonScope)
+@register.factory("focusyn.ui.view", scope=SingletonScope)
 class Window(Subscriber):
     @inject(
-        bus="tomate.bus",
-        config="tomate.config",
-        countdown="tomate.ui.countdown",
+        bus="focusyn.bus",
+        config="focusyn.config",
+        countdown="focusyn.ui.countdown",
         graph=Graph,
-        headerbar="tomate.ui.headerbar",
-        session="tomate.session",
-        session_button="tomate.ui.taskbutton",
-        shortcuts="tomate.ui.shortcut",
+        headerbar="focusyn.ui.headerbar",
+        session="focusyn.session",
+        session_button="focusyn.ui.taskbutton",
+        shortcuts="focusyn.ui.shortcut",
     )
     def __init__(
         self,
@@ -46,8 +46,8 @@ class Window(Subscriber):
         box.pack_start(session_button.widget, False, False, 0)
 
         self.widget = Gtk.Window(
-            title="Tomate",
-            icon=GdkPixbuf.Pixbuf.new_from_file(config.icon_path("tomate", 22)),
+            title="Focusyn",
+            icon=GdkPixbuf.Pixbuf.new_from_file(config.icon_path("focusyn", 22)),
             window_position=Gtk.WindowPosition.CENTER,
             resizable=False,
         )

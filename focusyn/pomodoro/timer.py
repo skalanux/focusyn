@@ -45,11 +45,11 @@ class State(enum.Enum):
     ENDED = 3
 
 
-@register.factory("tomate.timer", scope=SingletonScope)
+@register.factory("focusyn.timer", scope=SingletonScope)
 class Timer:
     ONE_SECOND = 1
 
-    @inject(bus="tomate.bus")
+    @inject(bus="focusyn.bus")
     def __init__(self, bus: Bus):
         self.duration = self.time_left = 0
         self.state = State.STOPPED

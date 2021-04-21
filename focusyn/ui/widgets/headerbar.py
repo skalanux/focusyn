@@ -7,22 +7,22 @@ from gi.repository import Gtk
 from wiring import SingletonScope, inject
 from wiring.scanning import register
 
-from tomate.pomodoro import Bus, Events, Session, SessionEndPayload, SessionPayload, Subscriber, on
-from tomate.ui import Shortcut, ShortcutEngine
+from focusyn.pomodoro import Bus, Events, Session, SessionEndPayload, SessionPayload, Subscriber, on
+from focusyn.ui import Shortcut, ShortcutEngine
 
-locale.textdomain("tomate")
+locale.textdomain("focusyn")
 logger = logging.getLogger(__name__)
 
 
-@register.factory("tomate.ui.headerbar.menu", scope=SingletonScope)
+@register.factory("focusyn.ui.headerbar.menu", scope=SingletonScope)
 class Menu(Subscriber):
     PREFERENCE_SHORTCUT = Shortcut("session.settings", "<control>comma")
 
     @inject(
-        bus="tomate.bus",
-        about="tomate.ui.about",
-        preference="tomate.ui.preference",
-        shortcuts="tomate.ui.shortcut",
+        bus="focusyn.bus",
+        about="focusyn.ui.about",
+        preference="focusyn.ui.preference",
+        shortcuts="focusyn.ui.shortcut",
     )
     def __init__(self, bus: Bus, about, preference, shortcuts: ShortcutEngine):
         self.connect(bus)
@@ -41,17 +41,17 @@ class Menu(Subscriber):
         return menu_item
 
 
-@register.factory("tomate.ui.headerbar", scope=SingletonScope)
+@register.factory("focusyn.ui.headerbar", scope=SingletonScope)
 class HeaderBar(Subscriber):
     START_SHORTCUT = Shortcut("session.start", "<control>s")
     STOP_SHORTCUT = Shortcut("session.stop", "<control>p")
     RESET_SHORTCUT = Shortcut("session.reset", "<control>r")
 
     @inject(
-        bus="tomate.bus",
-        menu="tomate.ui.headerbar.menu",
-        session="tomate.session",
-        shortcuts="tomate.ui.shortcut",
+        bus="focusyn.bus",
+        menu="focusyn.ui.headerbar.menu",
+        session="focusyn.session",
+        shortcuts="focusyn.ui.shortcut",
     )
     def __init__(self, bus: Bus, menu: Menu, session: Session, shortcuts: ShortcutEngine):
         self.connect(bus)

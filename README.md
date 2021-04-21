@@ -1,7 +1,7 @@
 Focusyn
 ========
 
-(a Fork from Tomate: eliostvs/tomate-gtk)
+(a Fork from Focusyn: eliostvs/focusyn-gtk)
 
 Focusyn is a Pomodoro timer and timetracker written in Gtk3 and Python for Linux desktops.
 
@@ -12,7 +12,7 @@ The Pomodoro Technique® is a management technique developed by Francesco Cirill
 Read more about it at the [official website](http://pomodorotechnique.com/).
 
 Pomodoro Technique® and Pomodoro™ are registered and filed trademarks owned by Francesco Cirillo.
-Tomate is not affiliated by, associated with nor endorsed by Francesco Cirillo.
+Focusyn is not affiliated by, associated with nor endorsed by Francesco Cirillo.
 
 Installation
 ------------

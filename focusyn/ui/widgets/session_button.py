@@ -6,24 +6,24 @@ from typing import Callable, Union
 from wiring import SingletonScope, inject
 from wiring.scanning import register
 
-from tomate.pomodoro import Bus, Events, Session, SessionEndPayload, SessionPayload, SessionType, Subscriber, on
-from tomate.ui import Shortcut, ShortcutEngine
+from focusyn.pomodoro import Bus, Events, Session, SessionEndPayload, SessionPayload, SessionType, Subscriber, on
+from focusyn.ui import Shortcut, ShortcutEngine
 from .mode_button import ModeButton
 
-locale.textdomain("tomate")
+locale.textdomain("focusyn")
 logger = logging.getLogger(__name__)
 
 
-@register.factory("tomate.ui.taskbutton", scope=SingletonScope)
+@register.factory("focusyn.ui.taskbutton", scope=SingletonScope)
 class SessionButton(Subscriber):
     POMODORO_SHORTCUT = Shortcut("session.pomodoro", "<control>1")
     SHORT_BREAK_SHORTCUT = Shortcut("session.short_break", "<control>2")
     LONG_BREAK_SHORTCUT = Shortcut("session.long_break", "<control>3")
 
     @inject(
-        bus="tomate.bus",
-        session="tomate.session",
-        shortcuts="tomate.ui.shortcut",
+        bus="focusyn.bus",
+        session="focusyn.session",
+        shortcuts="focusyn.ui.shortcut",
     )
     def __init__(self, bus: Bus, session: Session, shortcuts: ShortcutEngine):
         self.connect(bus)

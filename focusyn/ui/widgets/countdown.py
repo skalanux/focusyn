@@ -4,14 +4,14 @@ from gi.repository import Gtk
 from wiring import SingletonScope, inject
 from wiring.scanning import register
 
-from tomate.pomodoro import Bus, Events, SessionPayload, Subscriber, TimerPayload, format_time_left, on
+from focusyn.pomodoro import Bus, Events, SessionPayload, Subscriber, TimerPayload, format_time_left, on
 
 logger = logging.getLogger(__name__)
 
 
-@register.factory("tomate.ui.countdown", scope=SingletonScope)
+@register.factory("focusyn.ui.countdown", scope=SingletonScope)
 class Countdown(Subscriber):
-    @inject(bus="tomate.bus")
+    @inject(bus="focusyn.bus")
     def __init__(self, bus: Bus):
         self.widget = Gtk.Label(margin_top=30, margin_bottom=10, margin_right=10, margin_left=10)
         self.connect(bus)

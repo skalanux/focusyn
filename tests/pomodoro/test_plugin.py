@@ -4,7 +4,7 @@ from distutils.version import StrictVersion
 import pytest
 from wiring.scanning import scan_to_graph
 
-from tomate.pomodoro import Events, PluginEngine, suppress_errors
+from focusyn.pomodoro import Events, PluginEngine, suppress_errors
 
 
 @pytest.fixture
@@ -13,14 +13,14 @@ def plugin_engine(bus, graph, config) -> PluginEngine:
 
 
 def test_module(bus, config, graph):
-    graph.register_instance("tomate.bus", bus)
-    graph.register_instance("tomate.config", config)
-    scan_to_graph(["tomate.pomodoro.plugin"], graph)
+    graph.register_instance("focusyn.bus", bus)
+    graph.register_instance("focusyn.config", config)
+    scan_to_graph(["focusyn.pomodoro.plugin"], graph)
 
-    instance = graph.get("tomate.plugin")
+    instance = graph.get("focusyn.plugin")
 
     assert isinstance(instance, PluginEngine)
-    assert instance == graph.get("tomate.plugin")
+    assert instance == graph.get("focusyn.plugin")
 
 
 class TestPluginEngine:
@@ -79,7 +79,7 @@ class TestPluginEngine:
 
 class TestRaiseException:
     def test_does_not_raise_exception_when_debug_is_disabled(self):
-        os.environ.unsetenv("TOMATE_DEBUG")
+        os.environ.unsetenv("FOCUSYN_DEBUG")
 
         @suppress_errors
         def raise_exception():
@@ -88,7 +88,7 @@ class TestRaiseException:
         assert not raise_exception()
 
     def test_raises_exception_when_debug_enable(self):
-        os.environ.setdefault("TOMATE_DEBUG", "1")
+        os.environ.setdefault("FOCUSYN_DEBUG", "1")
 
         @suppress_errors
         def raise_exception():

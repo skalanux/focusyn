@@ -32,18 +32,18 @@ DATA_FILES = [
 ]
 
 setup(
-    author="Elio Esteves Duarte",
-    author_email="elio.esteves.duarte@gmail.com",
-    description="A pomodoro timer",
+    author="Juan Manuel Schillaci",
+    author_email="jmschillaci@gmail.com",
+    description="A pomodoro timer and time tracker",
     include_package_data=True,
-    keywords="pomodoro,tomate",
+    keywords="pomodoro,focusyn",
     license="GPL-3",
     long_description=open("README.md", "r", encoding="utf-8").read(),
-    name="tomate-gtk",
+    name="focusyn-gtk",
     packages=find_packages(exclude=["tests"]),
-    data_files=find_data_files(DATA_FILES, "tomate"),
-    url="https://github.com/eliostvs/tomate-gtk",
-    version="0.12.0",
+    data_files=find_data_files(DATA_FILES, "focusyn"),
+    url="https://github.com/skalanux/focusyn",
+    version="0.1.0",
     zip_safe=False,
-    entry_points={"console_scripts": ["tomate-gtk=tomate.__main__:main"]},
+    entry_points={"console_scripts": ["focusyn=focusyn.__main__:main"]},
 )

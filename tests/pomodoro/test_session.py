@@ -1,22 +1,22 @@
 import pytest
 from wiring.scanning import scan_to_graph
 
-from tomate.pomodoro import Events, Session, SessionPayload, SessionType
-from tomate.pomodoro.session import State
-from tomate.ui.testing import create_session_end_payload, create_session_payload, run_loop_for
+from focusyn.pomodoro import Events, Session, SessionPayload, SessionType
+from focusyn.pomodoro.session import State
+from focusyn.ui.testing import create_session_end_payload, create_session_payload, run_loop_for
 
 
 @pytest.fixture()
 def session(graph, config, bus, mocker):
-    graph.register_instance("tomate.bus", bus)
-    graph.register_instance("tomate.config", config)
+    graph.register_instance("focusyn.bus", bus)
+    graph.register_instance("focusyn.config", config)
     mocker.patch("uuid.uuid4", return_value="1234")
-    scan_to_graph(["tomate.pomodoro.timer", "tomate.pomodoro.session"], graph)
-    return graph.get("tomate.session")
+    scan_to_graph(["focusyn.pomodoro.timer", "focusyn.pomodoro.session"], graph)
+    return graph.get("focusyn.session")
 
 
 def test_module(graph, session):
-    instance = graph.get("tomate.session")
+    instance = graph.get("focusyn.session")
 
     assert isinstance(instance, Session)
     assert instance is session

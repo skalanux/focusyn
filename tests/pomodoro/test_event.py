@@ -1,6 +1,6 @@
 from wiring.scanning import scan_to_graph
 
-from tomate.pomodoro import Bus, Events, Subscriber, on
+from focusyn.pomodoro import Bus, Events, Subscriber, on
 
 
 class TestBus:
@@ -45,8 +45,8 @@ def test_subscriber(bus):
 
 
 def test_module(graph):
-    scan_to_graph(["tomate.pomodoro.event"], graph)
-    instance = graph.get("tomate.bus")
+    scan_to_graph(["focusyn.pomodoro.event"], graph)
+    instance = graph.get("focusyn.bus")
 
     assert isinstance(instance, Bus)
-    assert graph.get("tomate.bus") is instance
+    assert graph.get("focusyn.bus") is instance

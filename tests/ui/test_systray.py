@@ -2,9 +2,9 @@ import pytest
 from gi.repository import Gtk
 from wiring.scanning import scan_to_graph
 
-from tomate.pomodoro import Events
-from tomate.ui import SystrayMenu
-from tomate.ui.testing import refresh_gui
+from focusyn.pomodoro import Events
+from focusyn.ui import SystrayMenu
+from focusyn.ui.testing import refresh_gui
 
 
 @pytest.fixture
@@ -14,14 +14,14 @@ def window():
 
 @pytest.fixture
 def subject(graph, bus, window):
-    graph.register_instance("tomate.bus", bus)
-    graph.register_instance("tomate.ui.view", window)
-    scan_to_graph(["tomate.ui.systray"], graph)
-    return graph.get("tomate.ui.systray.menu")
+    graph.register_instance("focusyn.bus", bus)
+    graph.register_instance("focusyn.ui.view", window)
+    scan_to_graph(["focusyn.ui.systray"], graph)
+    return graph.get("focusyn.ui.systray.menu")
 
 
 def test_module(graph, subject):
-    instance = graph.get("tomate.ui.systray.menu")
+    instance = graph.get("focusyn.ui.systray.menu")
 
     assert isinstance(instance, SystrayMenu)
     assert instance is subject

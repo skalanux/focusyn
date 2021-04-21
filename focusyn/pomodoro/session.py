@@ -40,12 +40,12 @@ class State(enum.Enum):
     ENDED = 2
 
 
-@register.factory("tomate.session", scope=SingletonScope)
+@register.factory("focusyn.session", scope=SingletonScope)
 class Session(Subscriber):
     @inject(
-        bus="tomate.bus",
-        config="tomate.config",
-        timer="tomate.timer",
+        bus="focusyn.bus",
+        config="focusyn.config",
+        timer="focusyn.timer",
     )
     def __init__(self, bus: Bus, config, timer: Timer):
         self._config = config

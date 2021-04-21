@@ -4,44 +4,44 @@ import pytest
 from wiring.scanning import scan_to_graph
 
 from tests.conftest import TEST_DATA_DIR
-from tomate.pomodoro import Config, ConfigPayload, Events
+from focusyn.pomodoro import Config, ConfigPayload, Events
 
 
 @pytest.fixture
 def config(graph, bus):
-    graph.register_instance("tomate.bus", bus)
-    scan_to_graph(["tomate.pomodoro.config"], graph)
-    return graph.get("tomate.config")
+    graph.register_instance("focusyn.bus", bus)
+    scan_to_graph(["focusyn.pomodoro.config"], graph)
+    return graph.get("focusyn.config")
 
 
 def test_module(graph, config):
-    instance = graph.get("tomate.config")
+    instance = graph.get("focusyn.config")
 
     assert isinstance(instance, Config)
     assert instance is config
 
 
 def test_get_plugin_paths(config):
-    expected = os.path.join(TEST_DATA_DIR, "tomate", "plugins")
+    expected = os.path.join(TEST_DATA_DIR, "focusyn", "plugins")
 
     assert expected in config.plugin_paths()
 
 
 def test_get_config_path(config):
-    assert config.config_path() == os.path.join(TEST_DATA_DIR, "tomate", "tomate.conf")
+    assert config.config_path() == os.path.join(TEST_DATA_DIR, "focusyn", "focusyn.conf")
 
 
 def test_get_media_uri_raises_error_when_media_is_not_found(config):
     with pytest.raises(OSError) as excinfo:
-        config.media_uri("tomate.jpg")
+        config.media_uri("focusyn.jpg")
 
-    assert str(excinfo.value) == "Resource 'tomate.jpg' not found!"
+    assert str(excinfo.value) == "Resource 'focusyn.jpg' not found!"
 
 
 def test_get_media_uri(config):
-    expected = "file://" + os.path.join(TEST_DATA_DIR, "tomate", "media", "tomate.png")
+    expected = "file://" + os.path.join(TEST_DATA_DIR, "focusyn", "media", "focusyn.png")
 
-    assert config.media_uri("tomate.png") == expected
+    assert config.media_uri("focusyn.png") == expected
 
 
 def test_get_icon_path_raises_when_icon_not_found(config):
@@ -52,7 +52,7 @@ def test_get_icon_path_raises_when_icon_not_found(config):
 
 
 def test_set_option(config, tmpdir, bus, mocker):
-    config_path = tmpdir.mkdir("tmp").join("tomate.config").strpath
+    config_path = tmpdir.mkdir("tmp").join("focusyn.config").strpath
     config.config_path = lambda: config_path
 
     subscriber = mocker.Mock()
@@ -66,8 +66,8 @@ def test_set_option(config, tmpdir, bus, mocker):
 
 
 def test_get_icon_path(config):
-    expected = os.path.join(TEST_DATA_DIR, "icons", "hicolor", "24x24", "apps", "tomate.png")
-    assert config.icon_path("tomate", 48, "hicolor") == expected
+    expected = os.path.join(TEST_DATA_DIR, "icons", "hicolor", "24x24", "apps", "focusyn.png")
+    assert config.icon_path("focusyn", 48, "hicolor") == expected
 
 
 def test_icon_paths(config):
@@ -91,7 +91,7 @@ def test_get_defaults_option(config):
 
 
 def test_remove_section(config, tmpdir):
-    tmp_path = tmpdir.mkdir("tmp").join("tomate.config")
+    tmp_path = tmpdir.mkdir("tmp").join("focusyn.config")
     config.config_path = lambda: tmp_path.strpath
 
     config.set("section", "option", "value")

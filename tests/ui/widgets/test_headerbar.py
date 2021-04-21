@@ -2,9 +2,9 @@ import pytest
 from gi.repository import Gtk
 from wiring.scanning import scan_to_graph
 
-from tomate.pomodoro import Events
-from tomate.ui.testing import Q, active_shortcut, create_session_end_payload, create_session_payload, refresh_gui
-from tomate.ui.widgets import HeaderBar, HeaderBarMenu
+from focusyn.pomodoro import Events
+from focusyn.ui.testing import Q, active_shortcut, create_session_end_payload, create_session_payload, refresh_gui
+from focusyn.ui.widgets import HeaderBar, HeaderBarMenu
 
 
 class TestHeaderBar:
@@ -14,26 +14,26 @@ class TestHeaderBar:
 
     @pytest.fixture
     def headerbar(self, graph, menu, shortcut_engine, session, bus, mocker) -> HeaderBar:
-        graph.register_instance("tomate.bus", bus)
-        graph.register_instance("tomate.session", session)
-        graph.register_factory("tomate.ui.about", mocker.Mock)
-        graph.register_factory("tomate.ui.preference", mocker.Mock)
-        graph.register_instance("tomate.ui.menu", menu)
-        graph.register_instance("tomate.ui.shortcut", shortcut_engine)
+        graph.register_instance("focusyn.bus", bus)
+        graph.register_instance("focusyn.session", session)
+        graph.register_factory("focusyn.ui.about", mocker.Mock)
+        graph.register_factory("focusyn.ui.preference", mocker.Mock)
+        graph.register_instance("focusyn.ui.menu", menu)
+        graph.register_instance("focusyn.ui.shortcut", shortcut_engine)
 
         # gtk shortcuts binds leave beyond the scope
         shortcut_engine.disconnect(HeaderBar.START_SHORTCUT)
         shortcut_engine.disconnect(HeaderBar.STOP_SHORTCUT)
         shortcut_engine.disconnect(HeaderBar.RESET_SHORTCUT)
 
-        namespaces = ["tomate.ui.widgets.headerbar"]
+        namespaces = ["focusyn.ui.widgets.headerbar"]
 
         scan_to_graph(namespaces, graph)
 
-        return graph.get("tomate.ui.headerbar")
+        return graph.get("focusyn.ui.headerbar")
 
     def test_module(self, graph, headerbar):
-        instance = graph.get("tomate.ui.headerbar")
+        instance = graph.get("focusyn.ui.headerbar")
 
         assert isinstance(instance, HeaderBar)
         assert instance is headerbar
@@ -127,18 +127,18 @@ class TestHeaderBarMenu:
         return HeaderBarMenu(bus, about, preference, shortcut_engine)
 
     def test_module(self, about, bus, preference, graph, shortcut_engine):
-        graph.register_instance("tomate.bus", bus)
-        graph.register_instance("tomate.ui.about", about)
-        graph.register_instance("tomate.ui.preference", preference)
-        graph.register_instance("tomate.ui.shortcut", shortcut_engine)
+        graph.register_instance("focusyn.bus", bus)
+        graph.register_instance("focusyn.ui.about", about)
+        graph.register_instance("focusyn.ui.preference", preference)
+        graph.register_instance("focusyn.ui.shortcut", shortcut_engine)
 
-        namespaces = ["tomate.ui.widgets.headerbar"]
+        namespaces = ["focusyn.ui.widgets.headerbar"]
         scan_to_graph(namespaces, graph)
 
-        instance = graph.get("tomate.ui.headerbar.menu")
+        instance = graph.get("focusyn.ui.headerbar.menu")
 
         assert isinstance(instance, HeaderBarMenu)
-        assert instance is graph.get("tomate.ui.headerbar.menu")
+        assert instance is graph.get("focusyn.ui.headerbar.menu")
 
     @pytest.mark.parametrize(
         "widget,label,mock_name",

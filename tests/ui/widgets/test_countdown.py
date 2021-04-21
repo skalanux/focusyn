@@ -4,20 +4,20 @@ import xml.etree.ElementTree as ET
 import pytest
 from wiring.scanning import scan_to_graph
 
-from tomate.pomodoro import Events, TimerPayload, format_time_left
-from tomate.ui.testing import create_session_payload
-from tomate.ui.widgets import Countdown
+from focusyn.pomodoro import Events, TimerPayload, format_time_left
+from focusyn.ui.testing import create_session_payload
+from focusyn.ui.widgets import Countdown
 
 
 @pytest.fixture
 def countdown(bus, graph) -> Countdown:
-    graph.register_instance("tomate.bus", bus)
-    scan_to_graph(["tomate.ui.widgets.countdown"], graph)
-    return graph.get("tomate.ui.countdown")
+    graph.register_instance("focusyn.bus", bus)
+    scan_to_graph(["focusyn.ui.widgets.countdown"], graph)
+    return graph.get("focusyn.ui.countdown")
 
 
 def test_module(countdown, graph):
-    instance = graph.get("tomate.ui.countdown")
+    instance = graph.get("focusyn.ui.countdown")
 
     assert isinstance(instance, Countdown)
     assert instance is countdown

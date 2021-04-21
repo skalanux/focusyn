@@ -2,41 +2,41 @@ import pytest
 from gi.repository import Gdk, Gtk
 from wiring.scanning import scan_to_graph
 
-from tomate.pomodoro import Events
-from tomate.ui import Systray, Window
-from tomate.ui.testing import active_shortcut, create_session_end_payload, create_session_payload
+from focusyn.pomodoro import Events
+from focusyn.ui import Systray, Window
+from focusyn.ui.testing import active_shortcut, create_session_end_payload, create_session_payload
 
 
 @pytest.fixture
 def window(bus, config, graph, session) -> Window:
-    graph.register_instance("tomate.bus", bus)
-    graph.register_instance("tomate.config", config)
-    graph.register_instance("tomate.session", session)
+    graph.register_instance("focusyn.bus", bus)
+    graph.register_instance("focusyn.config", config)
+    graph.register_instance("focusyn.session", session)
 
     namespaces = [
-        "tomate.ui",
-        "tomate.pomodoro.plugin",
+        "focusyn.ui",
+        "focusyn.pomodoro.plugin",
     ]
     scan_to_graph(namespaces, graph)
-    return graph.get("tomate.ui.view")
+    return graph.get("focusyn.ui.view")
 
 
 def test_module(graph, window):
-    instance = graph.get("tomate.ui.view")
+    instance = graph.get("focusyn.ui.view")
 
     assert isinstance(instance, Window)
     assert instance is window
 
 
 def test_shortcuts(shortcut_engine, window):
-    from tomate.ui.widgets import HeaderBar
+    from focusyn.ui.widgets import HeaderBar
 
     assert active_shortcut(shortcut_engine, HeaderBar.START_SHORTCUT, window=window.widget) is True
 
 
 def test_start(mocker, window):
-    gtk_main = mocker.patch("tomate.ui.window.Gtk.main")
-    show_all = mocker.patch("tomate.ui.window.Gtk.Window.show_all")
+    gtk_main = mocker.patch("focusyn.ui.window.Gtk.main")
+    show_all = mocker.patch("focusyn.ui.window.Gtk.Window.show_all")
 
     window.run()
 
@@ -69,7 +69,7 @@ class TestWindowHide:
 
 class TestWindowQuit:
     def test_quits_when_timer_is_not_running(self, mocker, session, window):
-        main_quit = mocker.patch("tomate.ui.window.Gtk.main_quit")
+        main_quit = mocker.patch("focusyn.ui.window.Gtk.main_quit")
         session.is_running.return_value = False
 
         window.widget.emit("delete-event", Gdk.Event.new(Gdk.EventType.DELETE))

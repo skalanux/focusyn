@@ -1,16 +1,16 @@
 import pytest
 from wiring.scanning import scan_to_graph
 
-from tomate.pomodoro import Events, Timer, TimerPayload, format_time_left
-from tomate.pomodoro.timer import State
-from tomate.ui.testing import run_loop_for
+from focusyn.pomodoro import Events, Timer, TimerPayload, format_time_left
+from focusyn.pomodoro.timer import State
+from focusyn.ui.testing import run_loop_for
 
 
 def test_module(bus, graph):
-    graph.register_instance("tomate.bus", bus)
-    scan_to_graph(["tomate.pomodoro.timer"], graph)
+    graph.register_instance("focusyn.bus", bus)
+    scan_to_graph(["focusyn.pomodoro.timer"], graph)
 
-    instance = graph.get("tomate.timer")
+    instance = graph.get("focusyn.timer")
 
     assert isinstance(instance, Timer)
 

@@ -1,7 +1,7 @@
 from gi.repository import Gtk
 
-import tomate.pomodoro.plugin as plugin
-from tomate.pomodoro import Events, on
+import focusyn.pomodoro.plugin as plugin
+from focusyn.pomodoro import Events, on
 
 
 class PluginA(plugin.Plugin):

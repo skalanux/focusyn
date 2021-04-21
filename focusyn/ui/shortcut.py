@@ -15,12 +15,12 @@ class Shortcut(namedtuple("Shortcut", ["name", "value"])):
 
     @property
     def accel_path(self) -> str:
-        return "<tomate>/Global/{}".format(self.name)
+        return "<focusyn>/Global/{}".format(self.name)
 
 
-@register.factory("tomate.ui.shortcut", scope=SingletonScope)
+@register.factory("focusyn.ui.shortcut", scope=SingletonScope)
 class ShortcutEngine:
-    @inject(config="tomate.config")
+    @inject(config="focusyn.config")
     def __init__(self, config, accel_group=Gtk.AccelGroup()):
         self._config = config
         self.accel_group = accel_group

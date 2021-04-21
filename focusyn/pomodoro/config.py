@@ -14,9 +14,9 @@ logger = logging.getLogger(__name__)
 Payload = namedtuple("ConfigPayload", "action section option value")
 
 
-@register.factory("tomate.config", scope=SingletonScope)
+@register.factory("focusyn.config", scope=SingletonScope)
 class Config:
-    APP_NAME = "tomate"
+    APP_NAME = "focusyn"
     SHORTCUT_SECTION = "shortcuts"
     DURATION_SECTION = "timer"
     DURATION_LONG_BREAK = "longbreak_duration"
@@ -29,7 +29,7 @@ class Config:
         "long_break_interval": "4",
     }
 
-    @inject(bus="tomate.bus")
+    @inject(bus="focusyn.bus")
     def __init__(self, bus: Bus, parser=RawConfigParser(defaults=DEFAULTS, strict=True)):
         self.parser = parser
         self._bus = bus
@@ -75,9 +75,10 @@ class Config:
     def icon_path(self, iconname, size=None, theme=None):
         icon_path = IconTheme.getIconPath(iconname, size, theme, extensions=["png", "svg", "xpm"])
 
+        icon_path = 'data/icons/hicolor/256x256/apps/focusyn.png'
         if icon_path is not None:
             return icon_path
-
+        
         raise EnvironmentError("Icon '%s' not found!" % iconname)
 
     def get_int(self, section, option):

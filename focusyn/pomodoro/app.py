@@ -13,14 +13,14 @@ class State(enum.Enum):
     STARTED = 2
 
 
-@register.factory("tomate.app", scope=SingletonScope)
+@register.factory("focusyn.app", scope=SingletonScope)
 class Application(dbus.service.Object):
-    BUS_NAME = "com.github.Tomate"
-    BUS_PATH = "/com/github/Tomate"
-    BUS_INTERFACE = "com.github.Tomate"
-    SPEC = "tomate.app"
+    BUS_NAME = "com.github.Focusyn"
+    BUS_PATH = "/com/github/Focusyn"
+    BUS_INTERFACE = "com.github.Focusyn"
+    SPEC = "focusyn.app"
 
-    @inject(bus="dbus.session", window="tomate.ui.view", plugins="tomate.plugin")
+    @inject(bus="dbus.session", window="focusyn.ui.view", plugins="focusyn.plugin")
     def __init__(self, bus, window, plugins: PluginEngine):
         dbus.service.Object.__init__(self, bus, self.BUS_PATH)
         self.state = State.STOPPED

@@ -1,28 +1,28 @@
 import pytest
 from wiring.scanning import scan_to_graph
 
-from tomate.pomodoro import Events, SessionType
-from tomate.ui.testing import Q, active_shortcut, create_session_end_payload, create_session_payload, refresh_gui
-from tomate.ui.widgets import SessionButton
+from focusyn.pomodoro import Events, SessionType
+from focusyn.ui.testing import Q, active_shortcut, create_session_end_payload, create_session_payload, refresh_gui
+from focusyn.ui.widgets import SessionButton
 
 
 @pytest.fixture
 def session_button(bus, graph, session, shortcut_engine) -> SessionButton:
-    graph.register_instance("tomate.bus", bus)
-    graph.register_instance("tomate.session", session)
-    graph.register_instance("tomate.ui.shortcut", shortcut_engine)
-    scan_to_graph(["tomate.ui.widgets.session_button"], graph)
+    graph.register_instance("focusyn.bus", bus)
+    graph.register_instance("focusyn.session", session)
+    graph.register_instance("focusyn.ui.shortcut", shortcut_engine)
+    scan_to_graph(["focusyn.ui.widgets.session_button"], graph)
 
     # gtk shortcuts binds leave beyond the scope
     shortcut_engine.disconnect(SessionButton.POMODORO_SHORTCUT)
     shortcut_engine.disconnect(SessionButton.SHORT_BREAK_SHORTCUT)
     shortcut_engine.disconnect(SessionButton.LONG_BREAK_SHORTCUT)
 
-    return graph.get("tomate.ui.taskbutton")
+    return graph.get("focusyn.ui.taskbutton")
 
 
 def test_module(graph, session_button):
-    instance = graph.get("tomate.ui.taskbutton")
+    instance = graph.get("focusyn.ui.taskbutton")
 
     assert isinstance(instance, SessionButton)
     assert instance is session_button

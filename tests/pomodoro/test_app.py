@@ -4,25 +4,25 @@ from dbus.mainloop.glib import DBusGMainLoop
 from dbusmock import DBusTestCase
 from wiring.scanning import scan_to_graph
 
-from tomate.pomodoro import Application
-from tomate.pomodoro.app import State
+from focusyn.pomodoro import Application
+from focusyn.pomodoro.app import State
 
 DBusGMainLoop(set_as_default=True)
 
 
 @pytest.fixture
 def app(graph, window, plugin_engine, mocker) -> Application:
-    graph.register_instance("tomate.ui.view", window)
-    graph.register_instance("tomate.plugin", plugin_engine)
+    graph.register_instance("focusyn.ui.view", window)
+    graph.register_instance("focusyn.plugin", plugin_engine)
     graph.register_instance("dbus.session", mocker.Mock())
 
-    scan_to_graph(["tomate.pomodoro.app"], graph)
+    scan_to_graph(["focusyn.pomodoro.app"], graph)
 
-    return graph.get("tomate.app")
+    return graph.get("focusyn.app")
 
 
 def test_module(graph, app):
-    instance = graph.get("tomate.app")
+    instance = graph.get("focusyn.app")
 
     assert isinstance(instance, Application)
     assert instance is app
@@ -56,9 +56,9 @@ class TestFromGraph:
         DBusTestCase.tearDownClass()
 
     def test_create_app_instance_when_it_is_not_registered_in_dbus(self, graph, window, plugin_engine):
-        graph.register_instance("tomate.ui.view", window)
-        graph.register_instance("tomate.plugin", plugin_engine)
-        scan_to_graph(["tomate.pomodoro.app"], graph)
+        graph.register_instance("focusyn.ui.view", window)
+        graph.register_instance("focusyn.plugin", plugin_engine)
+        scan_to_graph(["focusyn.pomodoro.app"], graph)
 
         instance = Application.from_graph(graph, DBusTestCase.get_dbus())
 

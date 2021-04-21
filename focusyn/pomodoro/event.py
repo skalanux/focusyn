@@ -32,10 +32,10 @@ class Events(enum.Enum):
 Receiver = Callable[[Events, Any], Any]
 
 
-@register.factory("tomate.bus", scope=SingletonScope)
+@register.factory("focusyn.bus", scope=SingletonScope)
 class Bus:
     def __init__(self):
-        self._bus = blinker.NamedSignal("tomate")
+        self._bus = blinker.NamedSignal("focusyn")
 
     def connect(self, event: Events, receiver: Receiver, weak: bool = True):
         self._bus.connect(receiver, sender=event, weak=weak)

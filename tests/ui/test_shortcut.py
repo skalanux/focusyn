@@ -2,19 +2,19 @@ import pytest
 from gi.repository import Gtk
 from wiring.scanning import scan_to_graph
 
-from tomate.ui import Shortcut, ShortcutEngine
-from tomate.ui.testing import active_shortcut
+from focusyn.ui import Shortcut, ShortcutEngine
+from focusyn.ui.testing import active_shortcut
 
 
 @pytest.fixture
 def shortcut_engine(bus, config, graph) -> ShortcutEngine:
-    graph.register_instance("tomate.config", config)
-    scan_to_graph(["tomate.ui.shortcut"], graph)
-    return graph.get("tomate.ui.shortcut")
+    graph.register_instance("focusyn.config", config)
+    scan_to_graph(["focusyn.ui.shortcut"], graph)
+    return graph.get("focusyn.ui.shortcut")
 
 
 def test_module(graph, shortcut_engine):
-    instance = graph.get("tomate.ui.shortcut")
+    instance = graph.get("focusyn.ui.shortcut")
 
     assert isinstance(instance, ShortcutEngine)
     assert instance is shortcut_engine

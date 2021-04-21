@@ -5,8 +5,8 @@ from typing import Any, Callable, List, Optional
 
 from gi.repository import GLib, Gtk
 
-from tomate.pomodoro import SessionEndPayload, SessionPayload, SessionType
-from tomate.ui import Shortcut, ShortcutEngine
+from focusyn.pomodoro import SessionEndPayload, SessionPayload, SessionType
+from focusyn.ui import Shortcut, ShortcutEngine
 
 
 def active_shortcut(shortcut_engine: ShortcutEngine, shortcut: Shortcut, window: Optional[Gtk.Window] = None) -> bool:

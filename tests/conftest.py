@@ -4,8 +4,8 @@ import pytest
 from gi.repository import Gtk
 from wiring import Graph
 
-from tomate.pomodoro import Bus, Config, PluginEngine, Session
-from tomate.ui import ShortcutEngine, Window
+from focusyn.pomodoro import Bus, Config, PluginEngine, Session
+from focusyn.ui import ShortcutEngine, Window
 
 TEST_DATA_DIR = os.path.join(os.path.dirname(__file__), "data")
 
@@ -35,7 +35,7 @@ def window(mocker):
 @pytest.fixture
 def config(bus, tmpdir) -> Config:
     cfg = Config(bus)
-    tmp_path = tmpdir.mkdir("tomate").join("tomate.config")
+    tmp_path = tmpdir.mkdir("focusyn").join("focusyn.config")
     cfg.config_path = lambda: tmp_path.strpath
     return cfg
 

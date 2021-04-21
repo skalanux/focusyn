@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Session actions (start, stop, reset) keys in shortcuts section in the config
-- Join python-tomate and tomate-gtk projects
+- Join python-focusyn and focusyn-gtk projects
 - Timer, Session and App have their own state values instead of a shared Enum
 - Redesign the event API
 - Redesign the plugin API

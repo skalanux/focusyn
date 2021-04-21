@@ -41,9 +41,9 @@ class Plugin(IPlugin, Subscriber):
         return None
 
 
-@register.factory("tomate.plugin", scope=SingletonScope)
+@register.factory("focusyn.plugin", scope=SingletonScope)
 class PluginEngine:
-    @inject(bus="tomate.bus", config="tomate.config", graph=Graph)
+    @inject(bus="focusyn.bus", config="focusyn.config", graph=Graph)
     def __init__(self, bus: Bus, config: Config, graph: Graph):
         self._bus = bus
         self._graph = graph
@@ -101,4 +101,4 @@ def suppress_errors(wrapped, _, args, kwargs):
 
 
 def in_debug_mode():
-    return "TOMATE_DEBUG" in os.environ.keys()
+    return "FOCUSYN_DEBUG" in os.environ.keys()

@@ -10,12 +10,12 @@ gi.require_version("Gtk", "3.0")
 
 from wiring.scanning import scan_to_graph
 
-from tomate.pomodoro.app import Application
-from tomate.pomodoro.graph import graph
+from focusyn.pomodoro.app import Application
+from focusyn.pomodoro.graph import graph
 
 from gi.repository import Gdk
 
-locale.textdomain("tomate")
+locale.textdomain("focusyn")
 logger = logging.getLogger(__name__)
 
 
@@ -24,7 +24,7 @@ def main():
         options = parse_options()
         setup_logging(options)
 
-        scan_to_graph(["tomate"], graph)
+        scan_to_graph(["focusyn"], graph)
         app = Application.from_graph(graph)
 
         app.Run()
@@ -43,7 +43,7 @@ def setup_logging(options):
 
 
 def parse_options():
-    parser = argparse.ArgumentParser(prog="tomate-gtk")
+    parser = argparse.ArgumentParser(prog="focusyn-gtk")
 
     parser.add_argument(
         "-v",

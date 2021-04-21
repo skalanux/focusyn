@@ -1,9 +1,9 @@
 [Desktop Entry]
-Name=Tomate
+Name=Focusyn
 GenericName=Clock
-Comment=Gtk version from Tomate pomodoro timer.
+Comment=Gtk version from Focusyn pomodoro timer.
 Categories=Utility;Clock;
-Exec=tomate-gtk
-Icon=tomate
+Exec=focusyn-gtk
+Icon=focusyn
 Terminal=false
 Type=Application

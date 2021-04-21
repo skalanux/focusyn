@@ -4,7 +4,7 @@ from gi.repository import Gtk
 from wiring import SingletonScope, inject
 from wiring.scanning import register
 
-from tomate.pomodoro import Bus, Events, Subscriber, on
+from focusyn.pomodoro import Bus, Events, Subscriber, on
 
 
 class Systray:
@@ -15,9 +15,9 @@ class Systray:
         pass
 
 
-@register.factory("tomate.ui.systray.menu", scope=SingletonScope)
+@register.factory("focusyn.ui.systray.menu", scope=SingletonScope)
 class Menu(Subscriber):
-    @inject(bus="tomate.bus", window="tomate.ui.view")
+    @inject(bus="focusyn.bus", window="focusyn.ui.view")
     def __init__(self, bus: Bus, window):
         self.connect(bus)
         self.widget = Gtk.Menu(halign=Gtk.Align.CENTER)
