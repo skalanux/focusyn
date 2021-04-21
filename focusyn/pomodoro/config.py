@@ -57,7 +57,10 @@ class Config:
         return "file://" + self._resource_path(self.APP_NAME, "media", *resources)
 
     def plugin_paths(self):
-        return remove_duplicates(self._load_data_paths(self.APP_NAME, "plugins"))
+        #return remove_duplicates(self._load_data_paths(self.APP_NAME, "plugins"))
+        # fixme: Put back data path
+        return (['data/plugins'])
+
 
     def icon_paths(self):
         return remove_duplicates(self._load_data_paths("icons"))
