@@ -66,6 +66,7 @@ class Config:
         return remove_duplicates(self._load_data_paths("icons"))
 
     def _resource_path(self, *resources):
+        
         for resource in self._load_data_paths(*resources):
             if os.path.exists(resource):
                 return resource
@@ -74,6 +75,7 @@ class Config:
 
     def _load_data_paths(self, *resources):
         return [path for path in BaseDirectory.load_data_paths(*resources)]
+
 
     def icon_path(self, iconname, size=None, theme=None):
         icon_path = IconTheme.getIconPath(iconname, size, theme, extensions=["png", "svg", "xpm"])

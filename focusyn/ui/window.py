@@ -8,7 +8,7 @@ from wiring.scanning import register
 from focusyn.pomodoro import Bus, Config, Events, Session, Subscriber, on
 from .shortcut import ShortcutEngine
 from .systray import Systray
-from .widgets import Countdown, HeaderBar, SessionButton
+from .widgets import Countdown, CurrentTask, HeaderBar, SessionButton
 
 logger = logging.getLogger(__name__)
 
@@ -24,6 +24,7 @@ class Window(Subscriber):
         session="focusyn.session",
         session_button="focusyn.ui.taskbutton",
         shortcuts="focusyn.ui.shortcut",
+        current_task="focusyn.ui.current_task"
     )
     def __init__(
         self,
@@ -35,6 +36,7 @@ class Window(Subscriber):
         session: Session,
         session_button: SessionButton,
         shortcuts: ShortcutEngine,
+        current_task: CurrentTask
     ):
         self._session = session
         self._bus = bus
@@ -43,6 +45,7 @@ class Window(Subscriber):
 
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12)
         box.pack_start(countdown.widget, False, False, 0)
+        box.pack_start(current_task.widget, False, False, 0)
         box.pack_start(session_button.widget, False, False, 0)
 
         self.widget = Gtk.Window(
