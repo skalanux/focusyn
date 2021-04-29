@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 SECONDS_IN_A_MINUTE = 60
 
 
-class Payload(namedtuple("TimerPayload", ["time_left", "duration"])):
+class Payload(namedtuple("TimerPayload", ["time_left", "duration", "task"])):
     @property
     def remaining_ratio(self) -> float:
         try:
@@ -49,11 +49,16 @@ class State(enum.Enum):
 class Timer:
     ONE_SECOND = 1
 
-    @inject(bus="focusyn.bus")
-    def __init__(self, bus: Bus):
+    @inject(bus="focusyn.bus",
+        current_task="focusyn.ui.current_task"
+
+)
+    # TODO: Add type hint for current_task
+    def __init__(self, bus: Bus, current_task):
         self.duration = self.time_left = 0
         self.state = State.STOPPED
         self._bus = bus
+        self._current_task = current_task
 
     @fsm(target=State.STARTED, source=[State.ENDED, State.STOPPED], exit=lambda self: self._trigger(Events.TIMER_START))
     def start(self, seconds: int) -> bool:
@@ -98,7 +103,8 @@ class Timer:
         self.duration = self.time_left = 0
 
     def _trigger(self, event) -> None:
-        self._bus.send(event, payload=Payload(time_left=self.time_left, duration=self.duration))
+        task = self._current_task.widget.get_text()
+        self._bus.send(event, payload=Payload(time_left=self.time_left, task=task, duration=self.duration))
 
 
 def format_time_left(seconds: int) -> str:

@@ -24,11 +24,16 @@ class CurrentTask(Subscriber):
     @on(Events.SESSION_START)
     def _on_session_start(self, _, payload: SessionPayload) -> None:
         self.widget.set_editable(False)
-        #self._update(payload.duration)
+        breakpoint()
+        # TODO: Busar otra anera de updatetear el payload
+        #payload = SessionPayload(id=payload.id, type=payload.type, pomodoros=payload.pomodoros, duration=payload.duration, task='añañañ')
+        
+        self._update(payload.duration)
 
     @on(Events.SESSION_INTERRUPT)
     def _on_session_interrupt(self, _, payload: SessionPayload) -> None:
         self.widget.set_editable(True)
+        breakpoint()
         self.widget.grab_focus_without_selecting()
 
 

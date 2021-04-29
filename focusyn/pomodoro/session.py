@@ -14,8 +14,8 @@ from .timer import Payload as TimerPayload, SECONDS_IN_A_MINUTE, Timer
 
 logger = logging.getLogger(__name__)
 
-Payload = namedtuple("SessionPayload", ["id", "type", "pomodoros", "duration"])
-EndPayload = namedtuple("SessionEndPayload", ["id", "type", "pomodoros", "duration", "previous"])
+Payload = namedtuple("SessionPayload", ["id", "type", "pomodoros", "duration", "task"])
+EndPayload = namedtuple("SessionEndPayload", ["id", "type", "pomodoros", "duration", "previous", "task"])
 
 
 class Type(enum.Enum):
@@ -46,14 +46,16 @@ class Session(Subscriber):
         bus="focusyn.bus",
         config="focusyn.config",
         timer="focusyn.timer",
+        current_task="focusyn.ui.current_task"
     )
-    def __init__(self, bus: Bus, config, timer: Timer):
+    def __init__(self, bus: Bus, config, timer: Timer, current_task):
         self._config = config
         self._timer = timer
         self._bus = bus
         self.state = State.STOPPED
         self.current = Type.POMODORO
         self.pomodoros = 0
+        self._current_task = current_task
         self.connect(bus)
 
     @fsm(
@@ -128,11 +130,13 @@ class Session(Subscriber):
         self._bus.send(event, payload=self._create_payload())
 
     def _create_payload(self, factory=Payload, **kwargs):
+        task = self._current_task.widget.get_text()
         defaults = {
             "duration": self.duration,
             "id": uuid.uuid4(),
             "pomodoros": self.pomodoros,
             "type": self.current,
+            "task": task
         }
         defaults.update(kwargs)
         return factory(**defaults)
