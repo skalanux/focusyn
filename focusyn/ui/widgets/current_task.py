@@ -28,7 +28,7 @@ class CurrentTask(Subscriber):
         #payload = SessionPayload(id=payload.id, type=payload.type, pomodoros=payload.pomodoros, duration=payload.duration, task='añañañ')
 
 
-    @on(Events.SESSION_INTERRUPT)
+    @on(Events.SESSION_INTERRUPT, Events.SESSION_END)
     def _on_session_interrupt(self, _, payload: SessionPayload) -> None:
         self.widget.set_editable(True)
         self.widget.grab_focus_without_selecting()
